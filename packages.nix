@@ -4,6 +4,7 @@
     bat
     carapace
     clang
+    dmenu
     fd
     fnm
     fzf
@@ -18,6 +19,7 @@
     rustup
     tmux
     tree-sitter
+    wofi
     zoxide
   ];
 }

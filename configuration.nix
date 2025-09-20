@@ -63,9 +63,33 @@
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
+  hardware.bluetooth = {
+    enable = true;
+    powerOnBoot = true;
+    settings = {
+      General = {
+        # Shows battery charge of connected devices on supported
+        # Bluetooth adapters. Defaults to 'false'.
+        Experimental = true;
+        # When enabled other devices can connect faster to us, however
+        # the tradeoff is increased power consumption. Defaults to
+        # 'false'.
+        FastConnectable = false;
+      };
+      Policy = {
+        # Enable all controllers when they are found. This includes
+        # adapters present on start as well as adapters that are plugged
+        # in later on. Defaults to 'true'.
+        AutoEnable = true;
+      };
+    };
+  };
+  services.blueman.enable = true;
+
   # Enable sound with pipewire.
   services.pulseaudio.enable = false;
   security.rtkit.enable = true;
+  security.polkit.enable = true;
   services.pipewire = {
     enable = true;
     alsa.enable = true;
@@ -105,6 +129,12 @@
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
+  programs.sway = {
+    enable = true;
+    wrapperFeatures.gtk = true;
+  };
+  programs.waybar.enable = true;
+
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
@@ -114,9 +144,28 @@
     git
     curl
     xclip
+    kitty
+    grim
+    slurp
+    wl-clipboard
+    mako
   ];
 
   environment.variables.EDITOR = "nvim";
+
+  fonts = {
+    fontDir.enable = true;
+    fontconfig.useEmbeddedBitmaps = true;
+    packages = with pkgs; [
+      font-awesome
+      jetbrains-mono
+      nerd-fonts.jetbrains-mono
+      nerd-fonts.symbols-only
+      noto-fonts
+      noto-fonts-cjk-sans
+      noto-fonts-emoji
+    ];
+  };
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -127,6 +176,8 @@
   # };
 
   # List services that you want to enable:
+
+  services.gnome.gnome-keyring.enable = true;
 
   # Enable the OpenSSH daemon.
   services.openssh = {
