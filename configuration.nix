@@ -46,9 +46,12 @@
   # You can disable this if you're only using the Wayland session.
   services.xserver.enable = true;
 
+  # Don't shutdown on short power key press
+  services.logind.settings.Login.HandlePowerKey = "suspend";
+
   # Enable the KDE Plasma Desktop Environment.
   services.displayManager.sddm.enable = true;
-  services.desktopManager.plasma6.enable = true;
+  # services.desktopManager.plasma6.enable = true;
 
   # Configure keymap in X11
   services.xserver.xkb = {
@@ -117,6 +120,7 @@
       neovim
       wezterm
       git
+      gcr # Provides org.gnome.keyring.SystemPrompter
     #  thunderbird
     ];
   };
